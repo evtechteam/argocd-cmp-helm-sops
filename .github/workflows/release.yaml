@@ -32,6 +32,7 @@ jobs:
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
+            conventional-changelog-conventionalcommits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Set outputs
@@ -105,6 +106,7 @@ jobs:
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
+            conventional-changelog-conventionalcommits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo Semantic Release Versions
