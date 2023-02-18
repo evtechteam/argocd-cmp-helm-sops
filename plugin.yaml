@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ConfigManagementPlugin
+metadata:
+  name: cmp-helm-sops
+spec:
+  version: v1.0
+  init:
+    command: ["/bin/bash", "-c"]
+    args: |
+      echo "Initializing...";
+      help dep build
+  generate:
+    command: ["/bin/bash", "-c"]
+    args: |
+      extraArgs=""
+      if ! [[ "$@" =~ '-f' ]]; then
+          if [ -f "values.yaml" ]; then
+              extraArgs="$extraArgs -f values.yaml"
+          fi
+          if [ -f "secrets.yaml" ]; then
+              extraArgs="$extraArgs -f secrets.yaml"
+          fi
+      fi
+      helm secrets template . --create-namespace --dependency-update $extraArgs
+  discover:
+    fileName: "secrets.yaml"
