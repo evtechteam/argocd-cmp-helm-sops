@@ -50,11 +50,10 @@ jobs:
           fi
           echo "New semantic release: ${{ steps.semantic.outputs.new_release_published }}"
           echo "version: ${VERSION}"
-          echo "::set-output name=new_release::${{ steps.semantic.outputs.new_release_published }}"
-          echo "::set-output name=short_ref::${BRANCHTRANSLATED}"
-          echo "::set-output name=sha_short::SHA-$(git rev-parse --short=12 HEAD)"
-          echo "::set-output name=version::${VERSION}"
-
+          echo "new_release=${{ steps.semantic.outputs.new_release_published }}" >> $GITHUB_OUTPUT
+          echo "short_ref=${BRANCHTRANSLATED}" >> $GITHUB_OUTPUT
+          echo "sha_short=SHA-$(git rev-parse --short=12 HEAD)" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
   image:
     name: Build image
     needs: refs
@@ -82,7 +81,7 @@ jobs:
     name: Semantic Release Images and Artifacts
     runs-on: ubuntu-18.04
     needs: [ refs, image ]
-    if: always() && needs.refs.outputs.new_release == 'true' && github.ref == 'refs/heads/main'
+    if: always() && needs.refs.outputs.new_release == true && needs.refs.outputs.short_ref == 'main'
     env:
       DOCKER_USERNAME: ${{ github.repository_owner }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
