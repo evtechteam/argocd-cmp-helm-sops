@@ -76,7 +76,7 @@ jobs:
   release:
     name: Semantic Release Images and Artifacts
     runs-on: ubuntu-18.04
-    needs: [ refs, argocd-image ]
+    needs: [ refs, image ]
     env:
       DOCKER_USERNAME: ${{ github.repository_owner }}
       DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
