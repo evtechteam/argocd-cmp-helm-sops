@@ -26,39 +26,80 @@ analyzeCommits:
       release: "major"
     - type: "chore"
       release: "patch"
+    - type: "ci"
+      release: "patch"
 generateNotes:
   - path: "@semantic-release/release-notes-generator"
     writerOpts:
       groupBy: "type"
       commitGroupsSort:
+        - "hotfix"
         - "feat"
         - "perf"
         - "fix"
       commitsSort: "header"
-    types:
-    - type: "feat"
-    - section: "Features"
-    # Tracked bug fix with a hotfix branch
-    - type: "hotfix"
-    - section: "Bug Fixes"
-    # Uninmportent fix (CI testing, etc)
-    - type: "fix"
-    - section: "Bug Fixes"
-    - type: "chore"
-    - section: "Bug Fixes"
-    - type: "docs"
-    - hidden: true
-    - type: "doc"
-    - hidden: true
-    - type: "style"
-    - hidden: true
-    - type: "refactor"
-    - hidden: true
-    - type: "perf"
-    - hidden: true
-    - type: "test"
-    - hidden: true
-    presetConfig: true
+      mainTemplate: |
+        {{> header}}
+
+        {{#if noteGroups}}
+        {{#each noteGroups}}
+
+        ### ⚠ {{title}}
+
+        {{#each notes}}
+        * {{#if commit.scope}}**{{commit.scope}}:** {{/if}}{{text}}
+        {{/each}}
+        {{/each}}
+        {{/if}}
+        {{#each commitGroups}}
+
+        {{#if title}}
+        ### {{title}}
+
+        {{/if}}
+        {{#each commits}}
+        {{> commit root=@root}}
+        {{/each}}
+
+        {{/each}}
+
+        {{> footer}}
+    preset: conventionalcommits
+    presetConfig:
+      types:
+        - type: "feat"
+          section: "Features"
+        # Tracked bug fix with a hotfix branch
+        - type: "hotfix"
+          section: "Bug Fixes"
+        # Uninmportent fix (CI testing, etc)
+        - type: "fix"
+          section: "Bug Fixes"
+          hidden: false
+        - type: "chore"
+          section: "Changes"
+          hidden: false
+        - type: "docs"
+          section: "Changes"
+          hidden: false
+        - type: "doc"
+          section: "Changes"
+          hidden: false
+        - type: "style"
+          section: "Changes"
+          hidden: false
+        - type: "refactor"
+          section: "Changes"
+          hidden: false
+        - type: "perf"
+          section: "Changes"
+          hidden: false
+        - type: "test"
+          section: "Changes"
+          hidden: false
+        - type: ""
+          section: "Changes"
+          hidden: false
 prepare:
   - path: "@semantic-release/git"
   - path: "@semantic-release/changelog"
