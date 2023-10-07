@@ -6,7 +6,7 @@ ARG SOPS_VERSION=v3.8.0
 ARG HELM_SECRETS_VERSION=v4.5.1
 
 RUN \
-    curl -o /usr/local/bin/sops -L https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux && \
+    curl -o /usr/local/bin/sops -f -L https://github.com/mozilla/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux && \
     chmod +x /usr/local/bin/sops && \
     apk add jq yq && \
     mkdir -p /home/argocd/cmp-server/config && \
