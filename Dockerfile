@@ -1,7 +1,7 @@
 FROM alpine/helm:3.17.2
 
 # renovate: datasource=github-releases depName=getsops/sops
-ARG SOPS_VERSION=v3.10.1
+ARG SOPS_VERSION=v3.10.2
 # renovate: datasource=github-releases depName=jkroepke/helm-secrets
 ARG HELM_SECRETS_VERSION=v4.6.3
 
