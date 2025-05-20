@@ -3,7 +3,7 @@ FROM alpine/helm:3.17.3
 # renovate: datasource=github-releases depName=getsops/sops
 ARG SOPS_VERSION=v3.10.2
 # renovate: datasource=github-releases depName=jkroepke/helm-secrets
-ARG HELM_SECRETS_VERSION=v4.6.4
+ARG HELM_SECRETS_VERSION=v4.6.5
 
 RUN \
     curl -o /usr/local/bin/sops -f -L https://github.com/getsops/sops/releases/download/${SOPS_VERSION}/sops-${SOPS_VERSION}.linux.amd64 && \
