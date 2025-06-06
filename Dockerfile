@@ -1,4 +1,4 @@
-FROM alpine/helm:3.18.0
+FROM alpine/helm:3.18.1
 
 # renovate: datasource=github-releases depName=getsops/sops
 ARG SOPS_VERSION=v3.10.2
